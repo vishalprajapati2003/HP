@@ -135,9 +135,8 @@
 
 // export default Header;
 
-// components/Navbar.jsx
 import { motion } from "framer-motion";
-import { Link, Links } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import {
   Home,
   Map,
@@ -169,7 +168,7 @@ const Navbar = () => {
       }`}
     >
       <div className="container mx-auto flex items-center justify-between">
-        <Link to="/">
+        <NavLink to="/">
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -179,13 +178,13 @@ const Navbar = () => {
             <PlaneTakeoff size={28} className="text-blue-500" />
             Travio
           </motion.div>
-        </Link>
+        </NavLink>
         <div className="hidden md:flex space-x-8">
           {[
             { name: "Home", icon: <Home size={20} />, path: "/" },
             { name: "Tours", icon: <Map size={20} />, path: "/tours" },
             {
-              name: "Holiday Packages",     
+              name: "Holiday Packages",
               icon: <Gift size={20} />,
               path: "/packages",
             },
@@ -199,13 +198,17 @@ const Navbar = () => {
               animate={{ y: 0, opacity: 1 }}
               transition={{ delay: index * 0.1 + 0.3 }}
             >
-              <Link
+              <NavLink
                 to={item.path}
-                className="text-gray-600 hover:text-blue-500 transition-colors flex items-center gap-2"
+                className={({ isActive }) =>
+                  `flex items-center gap-2 transition-colors ${
+                    isActive ? "text-blue-500 font-semibold" : "text-gray-600"
+                  } hover:text-blue-500`
+                }
               >
                 {item.icon}
                 {item.name}
-              </Link>
+              </NavLink>
             </motion.div>
           ))}
         </div>
@@ -219,14 +222,3 @@ const Navbar = () => {
 };
 
 export default Navbar;
-/*
-<div className="absolute inset-0 flex justify-center items-center flex-col text-center space-y-7">
-<h2 className="text-5xl font-semibold text-gray-100">
-Enjoy Your Vacation With Us </h2>
-<div className="bg-white p-4 rounded-full shadow-lg flex items-center w-[80%] max-w-lg">
-  <input type="text" placeholder="Search for destinations..." className="w-full px-4 py-3 border-none focus:outline-none"/>
-  <input type"="text" placeholder="Destination" className="w-full px-4 py-3 border-none focus:outline-none"/>
-  <button className="bg-orange-500 text-white cursor-pointer px-4 py-3 rounded-full">Search</button>
-
-</div>
-*/
