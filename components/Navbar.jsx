@@ -330,6 +330,7 @@
 // };
 
 // export default Navbar;
+
 import { motion, AnimatePresence } from "framer-motion";
 import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import {
@@ -388,7 +389,7 @@ const Navbar = () => {
 
   return (
     <nav
-      className={`fixed z-50 top-0 left-0 w-full px-6 py-4 transition-all duration-300 ${
+      className={`fixed z-50 top-0 left-0 w-full px-4 sm:px-6 py-3 sm:py-4 transition-all duration-300 ${
         scrolling ? "bg-white shadow-lg" : "bg-transparent"
       }`}
     >
@@ -399,15 +400,15 @@ const Navbar = () => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.2 }}
-            className="text-2xl font-bold text-blue-600 flex items-center gap-2"
+            className="text-xl sm:text-2xl font-bold text-blue-600 flex items-center gap-2"
           >
-            <PlaneTakeoff size={28} className="text-blue-500" />
+            <PlaneTakeoff size={24} className="text-blue-500" />
             Travio
           </motion.div>
         </NavLink>
 
         {/* Desktop Navigation */}
-        <div className="hidden md:flex space-x-8">
+        <div className="hidden md:flex space-x-4 lg:space-x-8">
           {navItems.map((item, index) => (
             <motion.div
               key={item.name}
@@ -424,7 +425,7 @@ const Navbar = () => {
                 }
               >
                 {item.icon}
-                {item.name}
+                <span className="text-sm lg:text-base">{item.name}</span>
               </NavLink>
             </motion.div>
           ))}
@@ -454,7 +455,7 @@ const Navbar = () => {
               {/* Close Button */}
               <X
                 size={28}
-                className="text-gray-600 cursor-pointer mb-6" 
+                className="text-gray-600 cursor-pointer mb-6"
                 onClick={closeMenu}
               />
 
@@ -475,7 +476,7 @@ const Navbar = () => {
                   >
                     {item.icon}
                     {item.name}
-                  </NavLink> 
+                  </NavLink>
                 ))}
               </div>
             </div>
@@ -493,15 +494,15 @@ const Navbar = () => {
 
       {/* Custom Button for Navigation */}
       <motion.button
-        className="fixed bottom-6 right-6 bg-blue-600 text-white px-4 py-2 flex items-center gap-2 rounded-full cursor-pointer shadow-lg hover:bg-blue-700"
+        className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 bg-blue-600 text-white px-3 py-2 sm:px-4 sm:py-2 flex items-center gap-2 rounded-full cursor-pointer shadow-lg hover:bg-blue-700"
         onClick={() => navigate("/customize")}
         whileHover={{ scale: 1.1 }}
       >
-        <User size={24}/> Custom Package
+        <User size={20} className="sm:size-6" />
+        <span className="text-sm sm:text-base">Custom Package</span>
       </motion.button>
     </nav>
   );
 };
 
 export default Navbar;
- 
