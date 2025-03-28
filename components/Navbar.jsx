@@ -331,6 +331,7 @@
 
 // export default Navbar;
 
+
 import { motion, AnimatePresence } from "framer-motion";
 import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import {
@@ -347,20 +348,33 @@ import {
 } from "lucide-react";
 import { useEffect, useState } from "react";
 
+// Object to store scroll positions for each path
+const scrollPositions = {};
+
 const Navbar = () => {
   const [scrolling, setScrolling] = useState(false);
-  const [isMenuOpen, setIsMenuOpen] = useState(false); // State for mobile menu
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
 
   useEffect(() => {
     const handleScroll = () => {
       setScrolling(window.scrollY > 50);
+      // Save scroll position when scrolling
+      scrollPositions[location.pathname] = window.scrollY;
     };
 
-    handleScroll(); // Check scroll position on mount
+    // Restore scroll position when location changes
+    if (scrollPositions[location.pathname]) {
+      window.scrollTo(0, scrollPositions[location.pathname]);
+    } else {
+      window.scrollTo(0, 0); // Default to top if no position saved
+    }
+
     window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
   }, [location]);
 
   // Toggle mobile menu
@@ -385,6 +399,7 @@ const Navbar = () => {
     { name: "Flights", icon: <Plane size={20} />, path: "/flight" },
     { name: "Hotels", icon: <Building size={20} />, path: "/hotel" },
     { name: "History", icon: <History size={20} />, path: "/history" },
+    { name: "Login", icon: <User size={20} />, path: "/login" },
   ];
 
   return (
@@ -490,7 +505,7 @@ const Navbar = () => {
       )}
       {/* Custom Button for Navigation */}
       <motion.button
-        className="fixed  bottom-4 right-4 sm:bottom-6 sm:right-6 bg-blue-600 text-white px-3 py-2 sm:px-4 sm:py-2 flex items-center gap-2 rounded-full cursor-pointer shadow-lg hover:bg-blue-700"
+        className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 bg-blue-600 text-white px-3 py-2 sm:px-4 sm:py-2 flex items-center gap-2 rounded-full cursor-pointer shadow-lg hover:bg-blue-700"
         onClick={() => navigate("/customize")}
         whileHover={{ scale: 1.1 }}
       >
